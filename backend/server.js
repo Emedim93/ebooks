@@ -8,13 +8,9 @@ const pool = new Pool({
     connectingString: process.env.DATABASE_URL
 });
 
-
 app.use(cors());
 app.use(express.json());
 
-app.listen(5000, () => {
-    console.log('Server is running on port 5000');
-});
 
 //TEST de la route de base
 app.get('/', (req, res) => {
@@ -39,11 +35,16 @@ app.post('/books', async (req, res) => {
             [title, author, year, isbn]
         );
         res.json(newBook.rows[0]);
-    } catch (err) {
+    }   catch (err) {
         console.log(err.message);
         res.status(500).send('Server error');
     }
 });
+
+app.listen(5000, () => {
+    console.log('Server is running on port 5000');
+});
+
 
 app.delete('/books/:id', async (req,res) => {
     try {
